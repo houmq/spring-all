@@ -3,11 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.pspaceplus</groupId>
-    <artifactId>pspaceplus-starter</artifactId>
+    <groupId>com.summer</groupId>
+    <artifactId>summer-starter</artifactId>
     <packaging>pom</packaging>
-    <version>2.0.0-BETA</version>
-    <description>pspaceplus parent 依赖</description>
+    <version>1.0.0-SNAPSHOT</version>
+    <description>summer parent 依赖</description>
 
 
     <modules>
@@ -31,7 +31,7 @@
         <mybatis-spring-boot>2.1.0</mybatis-spring-boot>
         <alibaba.druid>1.1.20</alibaba.druid>
         <sharding.jdbc.version>4.0.1</sharding.jdbc.version>
-        <pspaceplus.version>2.0.0-BETA</pspaceplus.version>
+        <pspaceplus.version>1.0.0-SNAPSHOT</pspaceplus.version>
         <jwt.version>1.0.10.RELEASE</jwt.version>
         <fastjson.version>1.2.53</fastjson.version>
     </properties>
@@ -48,8 +48,8 @@
         <dependencies>
 
             <dependency>
-                <groupId>com.pspaceplus</groupId>
-                <artifactId>pspaceplus-common</artifactId>
+                <groupId>com.summer</groupId>
+                <artifactId>summer-common</artifactId>
                 <version>${pspaceplus.version}</version>
             </dependency>
 
