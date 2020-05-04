@@ -37,6 +37,4 @@ public class GatewayApplication {
         return new TokenVerifyGatewayFilterFactory();
     }
 
-
-
 }

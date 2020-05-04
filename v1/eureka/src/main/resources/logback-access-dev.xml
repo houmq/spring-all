@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property resource="application-dev.properties"/>
+    <property name="LOG_PATH" value="/logs/access"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Prudent>true</Prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_PATH}/tomcat.access.%d{yyyy-MM-dd}.log</FileNamePattern>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.access.PatternLayout">
+            <Pattern>[%D ms] %h %l %u [%t] "%r" %s %b "%i{Referer}" "%i{User-Agent} r=%requestContent "</Pattern>
+        </layout>
+    </appender>
+    <appender-ref ref="FILE"/>
+
+</configuration>

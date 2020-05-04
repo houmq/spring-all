@@ -1,10 +1,12 @@
 package com.summer.oauth.dao;
 
-import com.summer.common.entity.RoleEntity;
-import com.summer.common.entity.UsersEntity;
+import com.summer.common.entity.PermissionEntity;
+import com.summer.common.entity.UserInfoEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
+
 
 /**
  * AuthDao
@@ -15,8 +17,12 @@ import java.util.List;
 @Repository
 public interface AuthDao {
 
-    UsersEntity getUserByUserName(@Param("userName") String userName);
+    UserInfoEntity getUserByLoginName(@Param("loginName") String loginName);
 
-    List<RoleEntity> loadPermissionArray(@Param("array") String[] role);
+    List<PermissionEntity> loadPermissionArray(@Param("array") String[] role);
+
+    List<String> loadUserRoles(@Param("array") String[] array);
+
+
 
 }

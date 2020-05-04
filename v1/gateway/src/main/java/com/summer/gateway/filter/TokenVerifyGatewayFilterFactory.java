@@ -54,7 +54,7 @@ public class TokenVerifyGatewayFilterFactory extends AbstractGatewayFilterFactor
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             String path = exchange.getRequest().getURI().getPath();
-
+            int i = 1 / 0;
             if (config.getIgnore().contains(path)){
                 return chain.filter(exchange);
             }
@@ -64,7 +64,7 @@ public class TokenVerifyGatewayFilterFactory extends AbstractGatewayFilterFactor
                 if (StringUtils.isNotBlank(jwtToken)){
                     String info = JwtHelper.decode(jwtToken).getClaims();
                     if (access(info, config.getResource())){
-                        String authToken = "bearer " + jwtToken;
+                        String authToken = "Bearer " + jwtToken;
                         ServerHttpRequest request = exchange.getRequest().mutate().header(config.getName(), userInfo)
                                 .header(HttpHeaders.AUTHORIZATION, authToken).build();
                         return chain.filter(exchange.mutate().request(request).build());

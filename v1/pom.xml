@@ -31,9 +31,10 @@
         <mybatis-spring-boot>2.1.0</mybatis-spring-boot>
         <alibaba.druid>1.1.20</alibaba.druid>
         <sharding.jdbc.version>4.0.1</sharding.jdbc.version>
-        <pspaceplus.version>1.0.0-SNAPSHOT</pspaceplus.version>
+        <summer.version>1.0.0-SNAPSHOT</summer.version>
         <jwt.version>1.0.10.RELEASE</jwt.version>
         <fastjson.version>1.2.53</fastjson.version>
+        <logback.version>1.2.3</logback.version>
     </properties>
 
 
@@ -50,7 +51,7 @@
             <dependency>
                 <groupId>com.summer</groupId>
                 <artifactId>summer-common</artifactId>
-                <version>${pspaceplus.version}</version>
+                <version>${summer.version}</version>
             </dependency>
 
             <dependency>
@@ -126,6 +127,12 @@
             <version>${fastjson.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-access</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -154,11 +161,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-dependency-plugin</artifactId>
-                </plugin>
-
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-jar-plugin</artifactId>
                 </plugin>
             </plugins>
         </pluginManagement>

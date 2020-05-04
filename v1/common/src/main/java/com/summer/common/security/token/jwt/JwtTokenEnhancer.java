@@ -7,7 +7,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 import java.util.Collections;
-
+import java.util.Map;
 
 
 /**
@@ -19,13 +19,15 @@ import java.util.Collections;
 @Component
 public class JwtTokenEnhancer implements TokenEnhancer {
 
-    @Value("${pspaceplus.token.information:285565796@qq.com}")
+    @Value("${summer.information:285565796@qq.com}")
     public String information;
 
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
         DefaultOAuth2AccessToken accessToken = (DefaultOAuth2AccessToken) oAuth2AccessToken;
-        accessToken.setAdditionalInformation(Collections.singletonMap("other", information));
+        Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();
+        additionalInformation.putAll(Collections.singletonMap("mail", information));
+        accessToken.setAdditionalInformation(additionalInformation);
         return oAuth2AccessToken;
     }
 }

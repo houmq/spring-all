@@ -11,7 +11,7 @@
     <artifactId>summer-oauth</artifactId>
 
     <properties>
-        <main.class>aaa.aaa</main.class>
+        <main.class>com.summer.oauth.OauthApplication</main.class>
     </properties>
 
     <dependencies>

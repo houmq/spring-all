@@ -9,7 +9,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 
 @Configuration
-@ConditionalOnProperty(prefix = "pspaceplus.token", name = "storeType", havingValue = "redis")
+@ConditionalOnProperty(prefix = "summer", name = "storeType", havingValue = "redis")
 public class RedisTokenConfig {
 
     @Autowired

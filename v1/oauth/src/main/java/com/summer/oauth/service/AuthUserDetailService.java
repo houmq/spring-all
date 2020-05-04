@@ -1,8 +1,10 @@
 package com.summer.oauth.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.summer.common.entity.PermissionEntity;
+import com.summer.common.entity.UserInfoEntity;
 import com.summer.oauth.dao.AuthDao;
-import com.summer.common.entity.RoleEntity;
-import com.summer.common.entity.UsersEntity;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,22 +36,22 @@ public class AuthUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        UsersEntity user = authDao.getUserByUserName(userName);
+        UserInfoEntity user = authDao.getUserByLoginName(userName);
         if (null == user){
             return null;
         }
 
-        List<RoleEntity> roles = authDao.loadPermissionArray(user.getGroup_name().split(","));
+        List<String> roleNames = authDao.loadUserRoles(user.getRole().split(","));
+        List<PermissionEntity> roles = authDao.loadPermissionArray(user.getRole().split(","));
         List<String> permission = new ArrayList<>();
-        roles.forEach(role -> permission.addAll(Arrays.asList(role.getPowers().split(","))));
+        roles.forEach(role -> permission.addAll(Arrays.asList(role.getPermissions().split(","))));
         String[] permissionArray = new String[permission.size()];
-        logger.info("permission ==================: {}",permission.toString());
+        logger.info("permissions ==================: {}",permission.toString());
 
-
-        // TODO 用户信息待扩展
-        return User.withUsername(user.getName())
+        return User.withUsername(JSONObject.toJSONString(user))
                 .password(user.getPassword())
-                .roles(user.getGroup_name().split(","))
+                .roles(StringUtils.join(roleNames.iterator(),","))
+                .disabled(!user.isEnable())
                 .authorities(permission.toArray(permissionArray)).build();
     }
 

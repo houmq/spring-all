@@ -10,10 +10,10 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 
 @Configuration
-@ConditionalOnProperty(prefix = "pspaceplus.token", name = "storeType", havingValue = "jwt", matchIfMissing = true)
+@ConditionalOnProperty(prefix = "summer", name = "storeType", havingValue = "jwt", matchIfMissing = true)
 public class JwtTokenConfig {
 
-    @Value("${pspaceplus.token.jwt.key}")
+    @Value("${summer.jwtKey}")
     private String SIGNING_KEY;
 
 

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- 模块名称， 影响日志配置名，日志文件名 -->
+    <property name="appName" value="eureka"/>
+    <!--rootPath 日志路径，这里是相对路径，web项目eclipse下会输出到eclipse的安装目录下，如果部署到linux上的tomcat下，会输出到tomcat/bin目录 下 -->
+    <property name="ROOT_PATH" value="/logs"/>
+    <property name="DEV_FILE_PATH" value="dev" />
+    <property name="TEST_FILE_PATH" value="test" />
+    <property name="PROD_FILE_PATH" value="prod" />
+
+    <property name="LOG_PATTERN" value="日志打印: %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+    <property name="logCharset" value="UTF-8"/>
+    <contextName>${appName}</contextName>
+
+
+
+
+    <!-- 开发环境 -->
+    <springProfile name="dev">
+
+        <appender name="DEV_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder charset="UTF-8">
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="DEV_INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>INFO</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${DEV_FILE_PATH}/info/${appName}/${appName}-info.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${DEV_FILE_PATH}/info/${appName}/${appName}.info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <appender name="DEV_ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${DEV_FILE_PATH}/error/${appName}/${appName}-error.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${DEV_FILE_PATH}/error/${appName}/${appName}.error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <appender name="DEV_DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>DEBUG</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${DEV_FILE_PATH}/debug/${appName}/${appName}-debug.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${DEV_FILE_PATH}/debug/${appName}/${appName}.debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <!-- project default level 精准设置包下日志级别-->
+        <logger name="org.springframework" level="INFO"/>
+        <logger name="java.sql" level="INFO"/>
+        <logger name="org.mybatis" level="DEBUG"/>
+        <logger name="com.summer" level="DEBUG"/>
+
+
+        <root level="DEBUG">
+            <appender-ref ref="DEV_CONSOLE" />
+            <appender-ref ref="DEV_INFO_FILE" />
+            <appender-ref ref="DEV_ERROR_FILE" />
+            <appender-ref ref="DEV_DEBUG_FILE" />
+        </root>
+    </springProfile>
+
+
+    <springProfile name="prod">
+
+        <appender name="PROD_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder charset="UTF-8">
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="PROD_INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>INFO</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${PROD_FILE_PATH}/error/${appName}/${appName}-info.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${PROD_FILE_PATH}/error/${appName}/${appName}.info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <appender name="PROD_ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${PROD_FILE_PATH}/error/${appName}/${appName}-error.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${PROD_FILE_PATH}/error/${appName}/${appName}.error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <appender name="PROD_DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>DEBUG</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${PROD_FILE_PATH}/error/${appName}/${appName}-debug.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${PROD_FILE_PATH}/error/${appName}/${appName}.debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+
+        <root level="INFO">
+            <appender-ref ref="PROD_CONSOLE" />
+            <appender-ref ref="PROD_INFO_FILE" />
+            <appender-ref ref="PROD_ERROR_FILE" />
+            <appender-ref ref="PROD_DEBUG_FILE" />
+        </root>
+    </springProfile>
+
+
+    <springProfile name="test">
+
+        <appender name="TEST_CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder charset="UTF-8">
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+        </appender>
+
+        <appender name="TEST_INFO_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>INFO</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>INFO</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${TEST_FILE_PATH}/info/${appName}/${appName}-info.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${TEST_FILE_PATH}/info/${appName}/${appName}.info.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <appender name="TEST_ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${TEST_FILE_PATH}/error/${appName}/${appName}-error.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${TEST_FILE_PATH}/error/${appName}/${appName}.error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+        <appender name="TEST_DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <!--<Prudent>true</Prudent>-->
+            <!--临界值过滤器 等于或高于临界值时过滤器返回NEUTRAL,当日志级别低于临界值时日志会被拒绝-->
+            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                <level>ERROR</level>
+            </filter>
+            <!--级别过滤器 等于配置级别，过滤器会根据onMath 和 onMismatch接收或拒绝日志 -->
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>DEBUG</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>${LOG_PATTERN}</pattern>
+            </encoder>
+            <File>${ROOT_PATH}/${TEST_FILE_PATH}/debug/${appName}/${appName}-debug.log</File>
+            <!--按每小时滚动文件，如果一个小时内达到10M也会滚动文件, 滚动文件将会压缩成zip格式, 最多保留365个滚动文件 -->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${ROOT_PATH}/${TEST_FILE_PATH}/debug/${appName}/${appName}.debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+                <maxHistory>365</maxHistory>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>10MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+            </rollingPolicy>
+        </appender>
+
+
+        <root level="DEBUG">
+            <appender-ref ref="TEST_CONSOLE" />
+            <appender-ref ref="TEST_INFO_FILE" />
+            <appender-ref ref="TEST_ERROR_FILE" />
+            <appender-ref ref="TEST_DEBUG_FILE" />
+        </root>
+    </springProfile>
+
+
+</configuration>

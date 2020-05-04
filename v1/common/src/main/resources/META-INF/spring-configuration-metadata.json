@@ -1,0 +1,24 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.summer.common.properties.SummerProperties",
+      "name": "summer",
+      "type": "com.summer.common.properties.SummerProperties"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.summer.common.properties.SummerProperties",
+      "name": "summer.storeType",
+      "description": "Token 存储方式,可选值 jwt/redis",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.summer.common.properties.SummerProperties",
+      "name": "summer.jwtKey",
+      "description": "JWT Token 秘钥",
+      "type": "java.lang.String"
+    }
+  ]
+}
