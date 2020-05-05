@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.util.IOUtils;
 import com.summer.common.util.Result;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -54,7 +55,6 @@ public class TokenVerifyGatewayFilterFactory extends AbstractGatewayFilterFactor
         return (exchange, chain) -> {
             String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
             String path = exchange.getRequest().getURI().getPath();
-            int i = 1 / 0;
             if (config.getIgnore().contains(path)){
                 return chain.filter(exchange);
             }
@@ -65,7 +65,7 @@ public class TokenVerifyGatewayFilterFactory extends AbstractGatewayFilterFactor
                     String info = JwtHelper.decode(jwtToken).getClaims();
                     if (access(info, config.getResource())){
                         String authToken = "Bearer " + jwtToken;
-                        ServerHttpRequest request = exchange.getRequest().mutate().header(config.getName(), userInfo)
+                        ServerHttpRequest request = exchange.getRequest().mutate().header(config.getName(), Base64.encodeBase64String(userInfo.getBytes(IOUtils.UTF8)))
                                 .header(HttpHeaders.AUTHORIZATION, authToken).build();
                         return chain.filter(exchange.mutate().request(request).build());
                     }

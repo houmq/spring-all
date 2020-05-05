@@ -1,6 +1,6 @@
 package com.summer.common.security.handler;
 
-import com.summer.common.exception.CustomOauthException;
+import com.summer.common.security.error.CustomOauthException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;

@@ -13,5 +13,7 @@ public class SummerProperties {
 
     private String storeType;
     private String jwtKey;
+    private String resourceId;
+
 
 }

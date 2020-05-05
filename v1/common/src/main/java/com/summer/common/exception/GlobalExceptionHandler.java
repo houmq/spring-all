@@ -25,14 +25,14 @@ public class GlobalExceptionHandler {
      * @date 2020/4/28 12:51
      */
     @ExceptionHandler(value = GlobalErrorInfoException.class)
-    public Result errorHandlerOverJson(GlobalErrorInfoException e) {
-        logger.error(e.getMessage());
+    public Result errorHandlerOverJson(HttpServletRequest request, GlobalErrorInfoException e) {
+        logger.error("EXCEPTION PATH === {},===={}",request.getRequestURL(),e.getMessage());
         return Result.error(e.getMessage());
     }
 
     @ExceptionHandler(value = Exception.class)
-    public Result errorHandlerOverJson(Exception e) {
-        logger.error(e.getMessage());
+    public Result errorHandlerOverJson(HttpServletRequest request, Exception e) {
+        logger.error("EXCEPTION PATH === {},===={}",request.getRequestURL(),e.getMessage());
         return Result.error(e.getMessage());
     }
 

@@ -24,7 +24,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 
-    @Value("${pspaceplus.resource.id}")
+    @Value("${summer.resourceId}")
     public String RESOURCE_ID;
 
     @Autowired
@@ -46,7 +46,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/**").access("#oauth2.hasScope('CONFIG')")
+            .antMatchers("/**").access("#oauth2.hasScope('config')")
             .and().csrf().disable()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and().exceptionHandling().authenticationEntryPoint(customAuthenticationEntryPoint);

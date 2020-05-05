@@ -19,6 +19,12 @@
       "name": "summer.jwtKey",
       "description": "JWT Token 秘钥",
       "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.summer.common.properties.SummerProperties",
+      "name": "summer.resourceId",
+      "description": "资源验证ID",
+      "type": "java.lang.String"
     }
   ]
 }

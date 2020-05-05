@@ -20,8 +20,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.pspaceplus.config.dao"})
-@ComponentScan(value = {"com.pspaceplus"})
+@MapperScan(basePackages = {"com.summer.config.dao"})
+@ComponentScan(value = {"com.summer"})
 public class ConfigApplication {
 
     private static Logger logger = LoggerFactory.getLogger(ConfigApplication.class);
